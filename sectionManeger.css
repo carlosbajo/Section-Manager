@@ -1,21 +1,27 @@
-html, body{
+html, body {
     height: 100%;
-    overflow:hidden;
+    overflow: hidden;
     padding: 0px;
     margin: 0px;
 }
 
-#main-container{
+#main-container {
     height: 100%;
     width: 100%;
     overflow: hidden;
 }
 
-#sub-container{
+#sub-container {
     width: 100%;
     height: 100%;
     overflow: auto;
-    box-sizing: content-box; /* So the width will be 100% + 17px */
+    box-sizing: content-box;
+    overflow-y: -moz-hidden-unscrollable; /* Hide scroll on mozilla */
+    /* So the width will be 100% + 17px */
+}
+
+#sub-container::-webkit-scrollbar {
+    display: none;
 }
 
 .page {
@@ -23,10 +29,5 @@ html, body{
     height: 1000px;
 }
 
-.red {
-    background-color: brown;
-}
-
-.sky {
-    background-color: bisque;
-}
+.red { background-color: brown; }
+.sky { background-color: bisque; }
