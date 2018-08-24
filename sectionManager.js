@@ -44,6 +44,11 @@ function preventDefault(e) {
     e.returnValue = false;
 }
 
+/**
+ * 
+ * @param {*} pages - array of all pages in the doom 
+ * @param {*} scrollingUp  - the orientation of the scroll event
+ */
 function animatePages(pages, scrollingUp) {
     var currentPage = pages.length - 1;
     var pos = 0;
@@ -53,21 +58,25 @@ function animatePages(pages, scrollingUp) {
         if (scrollingUp) {
             if (pos2 == 0) {
                 clearInterval(id);
+                currentPage = (currentPage == pages.length) ? pages.length : currentPage++;
+                console.log(currentPage);
+                
             } else {
                 pos2 -= 7;
                 pages[currentPage].style.top = pos2 + 'px';
-                //pages[currentPage].style.left = pos + 'px';
             }
         } else {
             if (pos == 350) {
                 clearInterval(id);
+                currentPage = (currentPage == 0) ? 0 : currentPage--;
+                console.log(currentPage);
+                
             } else {
                 pos += 7;
                 pages[currentPage].style.top = pos + 'px';
-                //pages[currentPage].style.left = pos + 'px';
             }
         }
-        
+
     }
 
 }
