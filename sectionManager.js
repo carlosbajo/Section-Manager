@@ -44,35 +44,39 @@ function preventDefault(e) {
     e.returnValue = false;
 }
 
+var currentPage = pages.length - 1;
+var pageHeight = pages[0].offsetHeight;
 /**
  * 
  * @param {*} pages - array of all pages in the doom 
  * @param {*} scrollingUp  - the orientation of the scroll event
  */
 function animatePages(pages, scrollingUp) {
-    var currentPage = pages.length - 1;
+
     var pos = 0;
-    var pos2 = 350;
-    var id = setInterval(move, 0.001);
+    var pos2 = pageHeight;
+
+    //var MOVE_POS = pages[currentPage].offsetHeight;
+    if (currentPage >= 0 && currentPage < pages.length)
+        var id = setInterval(move, 0.001);
+
     function move() {
         if (scrollingUp) {
-            if (pos2 == 0) {
+            if (pos2 <= 0) {
                 clearInterval(id);
-                currentPage = (currentPage == pages.length) ? pages.length : currentPage++;
+                currentPage = (currentPage == pages.length - 1) ? pages.length - 1 : currentPage += 1;
                 console.log(currentPage);
-                
             } else {
-                pos2 -= 7;
+                pos2 -= 15;
                 pages[currentPage].style.top = pos2 + 'px';
             }
         } else {
-            if (pos == 350) {
+            if (pos >= pageHeight) {
                 clearInterval(id);
-                currentPage = (currentPage == 0) ? 0 : currentPage--;
+                currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
                 console.log(currentPage);
-                
             } else {
-                pos += 7;
+                pos += 15;
                 pages[currentPage].style.top = pos + 'px';
             }
         }
