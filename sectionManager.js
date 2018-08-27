@@ -45,7 +45,7 @@ function preventDefault(e) {
 }
 
 var currentPage = pages.length - 1;
-var pageHeight = pages[0].offsetHeight;
+var pageHeight = pages[0].offsetWidth;
 /**
  * 
  * @param {*} pages - array of all pages in the doom 
@@ -74,7 +74,7 @@ function animatePages(pages, scrollingUp) {
                 currentPage += 1;
             } else {
                 pos2 = (pos2 - animationSmooth <= 0) ? 0 : pos2 -= animationSmooth;
-                pages[currentPage+1].style.top = pos2 + 'px';
+                pages[currentPage+1].style.right = pos2 + 'px';
             }
         } else {
             if (pos >= pageHeight) {
@@ -82,7 +82,7 @@ function animatePages(pages, scrollingUp) {
                 currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
             } else {
                 pos += animationSmooth;
-                pages[currentPage].style.top = pos + 'px';
+                pages[currentPage].style.right = pos + 'px';
             }
         }
 
@@ -95,10 +95,6 @@ function preventDefaultForScrollKeys(e) {
         preventDefault(e);
         return false;
     }
-}
-
-function contentManager(params) {
-    
 }
 
 if (window.addEventListener) // older FF
