@@ -44,6 +44,9 @@ function preventDefault(e) {
     e.returnValue = false;
 }
 
+console.log(pages);
+
+
 var currentPage = pages.length - 1;
 var pageHeight = pages[0].offsetHeight;
 /**
@@ -53,28 +56,34 @@ var pageHeight = pages[0].offsetHeight;
  */
 function animatePages(pages, scrollingUp) {
 
-    var pos = 0;
-    var pos2 = pageHeight;
+    var pos = 0; 
+    var pos2 = pageHeight; //heigth of the pages getted from the dom
+    var id; //ID of the interval
 
-    //var MOVE_POS = pages[currentPage].offsetHeight;
-    if (currentPage >= 0 && currentPage < pages.length)
-        var id = setInterval(move, 0.001);
+    //Determine the type of movement
+    if ((currentPage == 0) && scrollingUp) {
+        id = setInterval(move, 0.001);
+    } else if ((currentPage == pages.length - 1) && !scrollingUp) {
+        id = setInterval(move, 0.001);
+    } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
+        id = setInterval(move, 0.001);
+    }
 
     function move() {
         if (scrollingUp) {
             if (pos2 <= 0) {
                 clearInterval(id);
-                currentPage = (currentPage == pages.length - 1) ? pages.length - 1 : currentPage += 1;
-                console.log(currentPage);
+                currentPage += 1;
             } else {
-                pos2 -= 15;
-                pages[currentPage].style.top = pos2 + 'px';
+                pos2 = (pos2 - 15 <= 0) ? 0 : pos2 -= 15;
+                pages[currentPage+1].style.top = pos2 + 'px';
             }
         } else {
             if (pos >= pageHeight) {
                 clearInterval(id);
                 currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
-                console.log(currentPage);
+                console.log('current page: down '+currentPage);
+
             } else {
                 pos += 15;
                 pages[currentPage].style.top = pos + 'px';
