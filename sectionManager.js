@@ -44,9 +44,6 @@ function preventDefault(e) {
     e.returnValue = false;
 }
 
-console.log(pages);
-
-
 var currentPage = pages.length - 1;
 var pageHeight = pages[0].offsetHeight;
 /**
@@ -56,17 +53,18 @@ var pageHeight = pages[0].offsetHeight;
  */
 function animatePages(pages, scrollingUp) {
 
-    var pos = 0; 
+    var pos = 0;
+    var animationSmooth = 8;
     var pos2 = pageHeight; //heigth of the pages getted from the dom
     var id; //ID of the interval
 
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
-        id = setInterval(move, 0.001);
+        id = setInterval(move, 0.0001);
     } else if ((currentPage == pages.length - 1) && !scrollingUp) {
-        id = setInterval(move, 0.001);
+        id = setInterval(move, 0.0001);
     } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
-        id = setInterval(move, 0.001);
+        id = setInterval(move, 0.0001);
     }
 
     function move() {
@@ -75,17 +73,15 @@ function animatePages(pages, scrollingUp) {
                 clearInterval(id);
                 currentPage += 1;
             } else {
-                pos2 = (pos2 - 15 <= 0) ? 0 : pos2 -= 15;
+                pos2 = (pos2 - animationSmooth <= 0) ? 0 : pos2 -= animationSmooth;
                 pages[currentPage+1].style.top = pos2 + 'px';
             }
         } else {
             if (pos >= pageHeight) {
                 clearInterval(id);
                 currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
-                console.log('current page: down '+currentPage);
-
             } else {
-                pos += 15;
+                pos += animationSmooth;
                 pages[currentPage].style.top = pos + 'px';
             }
         }
@@ -94,12 +90,15 @@ function animatePages(pages, scrollingUp) {
 
 }
 
-
 function preventDefaultForScrollKeys(e) {
     if (keys[e.keyCode]) {
         preventDefault(e);
         return false;
     }
+}
+
+function contentManager(params) {
+    
 }
 
 if (window.addEventListener) // older FF
