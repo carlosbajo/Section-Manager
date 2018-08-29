@@ -1,16 +1,16 @@
 'use strict';
-var pages = document.getElementsByClassName('page');
-var parent = document.getElementById('main-container');
-var child = document.getElementById('sub-container');
-var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
-var whiteSpace = 0;
-
+var pages = document.getElementsByClassName('page'); //All pages from the dom
+var parent = document.getElementById('main-container'); //main container used for touch detection
+var child = document.getElementById('sub-container'); //sub main container
+var keys = { 37: 1, 38: 1, 39: 1, 40: 1 }; // Keys disabled
+var currentPage = pages.length - 1; // Number of the current page in the dom
+var pageWidth = window.innerWidth;
+var isScrolling = false;
 //Disabling scroll
-whiteSpace = child.offsetWidth - child.clientWidth;
+var whiteSpace = child.offsetWidth - child.clientWidth;
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
 
-var isScrolling = false;
 function preventDefault(e) {
     e = e || window.event;
     if (e.preventDefault)
@@ -29,6 +29,10 @@ function preventDefault(e) {
     e.returnValue = false;
 }
 
+/**
+ * 
+ * @param {*} orientation - Orientation of the animation scroll
+ */
 function movePage(orientation) {
     if (!isScrolling) {
         animatePages(pages, orientation, isScrolling);
@@ -39,11 +43,14 @@ function movePage(orientation) {
     }
 }
 
+/**
+ * Function for wait for the scroll animation.
+ */
 function waitForScroll() {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve(true);
-        }, 1000);
+        }, 500);
     });
 }
 
@@ -54,9 +61,6 @@ function preventDefaultForScrollKeys(e) {
     }
 }
 
-
-var currentPage = pages.length - 1;
-var pageHeight = window.innerWidth;
 /**
  * 
  * @param {*} pages - array of all pages in the doom 
@@ -66,7 +70,7 @@ function animatePages(pages, scrollingUp) {
 
     var pos = 0;
     var animationSmooth = 8;
-    var pos2 = pageHeight; //heigth of the pages getted from the dom
+    var pos2 = pageWidth; //heigth of the pages getted from the dom
     var id; //ID of the interval
 
     //Determine the type of movement
@@ -85,15 +89,15 @@ function animatePages(pages, scrollingUp) {
                 currentPage += 1;
             } else {
                 pos2 = (pos2 - animationSmooth <= 0) ? 0 : pos2 -= animationSmooth;
-                pages[currentPage + 1].style.right = pos2 + 'px';
+                pages[currentPage + 1].style.left = pos2 + 'px';
             }
         } else {
-            if (pos >= pageHeight) {
+            if (pos >= pageWidth) {
                 clearInterval(id);
                 currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
             } else {
                 pos += animationSmooth;
-                pages[currentPage].style.right = pos + 'px';
+                pages[currentPage].style.left = pos + 'px';
             }
         }
 
@@ -101,7 +105,11 @@ function animatePages(pages, scrollingUp) {
 
 }
 
-// credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
+/**
+ * 
+ * @param {*} el - Element of the dom that gonna have the touch detection
+ * @param {*} callback - Callback function for code.
+ */
 function swipedetect(el, callback) {
 
     var touchsurface = el,
@@ -111,8 +119,8 @@ function swipedetect(el, callback) {
         distX,
         distY,
         threshold = 10, //required min distance traveled to be considered swipe
-        restraint = 600, // maximum distance allowed at the same time in perpendicular direction
-        allowedTime = 400, // maximum time allowed to travel that distance
+        restraint = 1000, // maximum distance allowed at the same time in perpendicular direction
+        allowedTime = 2000, // maximum time allowed to travel that distance
         elapsedTime,
         startTime,
         handleswipe = callback || function (swipedir) { }
@@ -163,9 +171,9 @@ swipedetect(parent, function (swipeOrientation) {
 });
 
 
-if (window.addEventListener) // older FF
+if (window.addEventListener)
     window.addEventListener('DOMMouseScroll', preventDefault, false);
-window.onwheel = preventDefault; // modern standard
-window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-window.ontouchmove = preventDefault; // mobile
+window.onwheel = preventDefault;
+window.onmousewheel = document.onmousewheel = preventDefault;
+window.ontouchmove = preventDefault;
 document.onkeydown = preventDefaultForScrollKeys;
