@@ -11,19 +11,31 @@ var whiteSpace = child.offsetWidth - child.clientWidth;
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
 
+//Update the UI when the window is resized.
+window.onresize = function () {
+    pageWidth = window.innerWidth;
+    for (let i = 0; i < pages.length; i++)
+        if (pages[i].offsetLeft > 0)
+            pages[i].style.left = pageWidth + 'px';
+};
+
 function preventDefault(e) {
     e = e || window.event;
     if (e.preventDefault)
         e.preventDefault();
 
+        console.log(e.deltaY);
+        
     //Scrolling UP
-   /* if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
         if (e.deltaY < 0) {
             movePage(true)
+            return;
         } else {
             movePage(false);
+            return;
         }
-    }*/
+    }
 
 
     e.returnValue = false;
@@ -50,7 +62,7 @@ function waitForScroll() {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve(true);
-        }, 500);
+        }, pageWidth + 50);
     });
 }
 
@@ -75,11 +87,11 @@ function animatePages(pages, scrollingUp) {
 
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
-        id = setInterval(move, 0.0001);
+        id = setInterval(move, 1);
     } else if ((currentPage == pages.length - 1) && !scrollingUp) {
-        id = setInterval(move, 0.0001);
+        id = setInterval(move, 1);
     } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
-        id = setInterval(move, 0.0001);
+        id = setInterval(move, 1);
     }
 
     function move() {
@@ -158,7 +170,6 @@ function swipedetect(el, callback) {
 
 //Touch detection
 swipedetect(parent, function (swipeOrientation) {
-
     switch (swipeOrientation) {
         case 'right':
             movePage(false);
