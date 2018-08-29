@@ -17,11 +17,14 @@ function preventDefault(e) {
         e.preventDefault();
 
     //Scrolling UP
-    if (e.deltaY < 0) {
-        movePage(true)
-    } else {
-        movePage(false);
-    }
+   /* if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+        if (e.deltaY < 0) {
+            movePage(true)
+        } else {
+            movePage(false);
+        }
+    }*/
+
 
     e.returnValue = false;
 }
@@ -44,9 +47,16 @@ function waitForScroll() {
     });
 }
 
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
 
 var currentPage = pages.length - 1;
-var pageHeight = pages[0].offsetWidth;
+var pageHeight = window.innerWidth;
 /**
  * 
  * @param {*} pages - array of all pages in the doom 
@@ -100,9 +110,9 @@ function swipedetect(el, callback) {
         startY,
         distX,
         distY,
-        threshold = 150, //required min distance traveled to be considered swipe
-        restraint = 100, // maximum distance allowed at the same time in perpendicular direction
-        allowedTime = 300, // maximum time allowed to travel that distance
+        threshold = 10, //required min distance traveled to be considered swipe
+        restraint = 600, // maximum distance allowed at the same time in perpendicular direction
+        allowedTime = 400, // maximum time allowed to travel that distance
         elapsedTime,
         startTime,
         handleswipe = callback || function (swipedir) { }
@@ -138,36 +148,20 @@ function swipedetect(el, callback) {
     }, false)
 }
 
-//USAGE:
-/* 
-var el = document.getElementById('swipezone');
-swipedetect(el, function(swipedir){
-    // swipedir contains either "none", "left", "right", "top", or "down"
-    el.innerHTML = 'Swiped <span style="color:yellow">' + swipedir +'</span>';
-});*/
-
-
-function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-        preventDefault(e);
-        return false;
-    }
-}
-
-//USAGE
+//Touch detection
 swipedetect(parent, function (swipeOrientation) {
-    console.log(swipeOrientation);
-    
+
     switch (swipeOrientation) {
-        case 'right': case 'down':
+        case 'right':
             movePage(false);
             break;
 
-        case 'left': case 'up':
+        case 'left':
             movePage(true);
             break;
     }
 });
+
 
 if (window.addEventListener) // older FF
     window.addEventListener('DOMMouseScroll', preventDefault, false);
