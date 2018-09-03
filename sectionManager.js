@@ -23,20 +23,19 @@ function preventDefault(e) {
     e = e || window.event;
     if (e.preventDefault)
         e.preventDefault();
-
-        console.log(e.deltaY);
+        
         
     //Scrolling UP
-    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
-        if (e.deltaY < 0) {
-            movePage(true)
-            return;
-        } else {
-            movePage(false);
-            return;
-        }
-    }
+    console.log(e.deltaY);
+    
 
+    if (e.deltaY < 0) {
+        movePage(true,e)
+        return;
+    } else if (e.deltaY > 0) {
+        movePage(false,e);
+        return;
+    }
 
     e.returnValue = false;
 }
@@ -45,12 +44,14 @@ function preventDefault(e) {
  * 
  * @param {*} orientation - Orientation of the animation scroll
  */
-function movePage(orientation) {
+function movePage(orientation,e) {
     if (!isScrolling) {
         animatePages(pages, orientation, isScrolling);
         isScrolling = true;
+
         waitForScroll().then(function () {
-            isScrolling = false
+            isScrolling = false;
+            propagationPrevent--;
         });
     }
 }
@@ -87,11 +88,11 @@ function animatePages(pages, scrollingUp) {
 
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
-        id = setInterval(move, 1);
+        id = setInterval(move, 2);
     } else if ((currentPage == pages.length - 1) && !scrollingUp) {
-        id = setInterval(move, 1);
+        id = setInterval(move, 2);
     } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
-        id = setInterval(move, 1);
+        id = setInterval(move, 2);
     }
 
     function move() {
