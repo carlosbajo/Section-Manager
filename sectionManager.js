@@ -3,13 +3,15 @@ var pages = document.getElementsByClassName('page'); //All pages from the dom
 var parent = document.getElementById('main-container'); //main container used for touch detection
 var child = document.getElementById('sub-container'); //sub main container
 var keys = { 37: 1, 38: 1, 39: 1, 40: 1 }; // Keys disabled
-var currentPage = pages.length - 1; // Number of the current page in the dom
+var currentPage = 0; // Number of the current page in the dom
 var pageWidth = window.innerWidth;
 var isScrolling = false;
 //Disabling scroll
 var whiteSpace = child.offsetWidth - child.clientWidth;
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
+
+console.log(pages);
 
 //Update the UI when the window is resized.
 window.onresize = function () {
@@ -26,9 +28,7 @@ function preventDefault(e) {
         
         
     //Scrolling UP
-    console.log(e.deltaY);
-    
-
+    //console.log(e.deltaY);
     if (e.deltaY < 0) {
         movePage(true,e)
         return;
@@ -51,7 +51,6 @@ function movePage(orientation,e) {
 
         waitForScroll().then(function () {
             isScrolling = false;
-            propagationPrevent--;
         });
     }
 }
@@ -67,6 +66,11 @@ function waitForScroll() {
     });
 }
 
+/**
+ * Prevent default keys action
+ * 
+ * @param {*} e 
+ */
 function preventDefaultForScrollKeys(e) {
     if (keys[e.keyCode]) {
         preventDefault(e);
@@ -86,6 +90,8 @@ function animatePages(pages, scrollingUp) {
     var pos2 = pageWidth; //heigth of the pages getted from the dom
     var id; //ID of the interval
 
+    
+    
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
         id = setInterval(move, 2);
