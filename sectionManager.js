@@ -1,72 +1,65 @@
 'use strict';
-var pages = document.getElementsByClassName('page'); //All pages from the dom
-var parent = document.getElementById('main-container'); //main container used for touch detection
-var child = document.getElementById('sub-container'); //sub main container
-var keys = { 37: 1, 38: 1, 39: 1, 40: 1 }; // Keys disabled
-var currentPage = pages.length - 1; // Number of the current page in the dom
-var pageWidth = window.innerWidth;
-var isScrolling = false;
-//Disabling scroll
-var whiteSpace = child.offsetWidth - child.clientWidth;
+var pages = document.getElementsByClassName('page') //All pages from the dom
+    , parent = document.getElementById('main-container') //main container used for touch detection
+    , child = document.getElementById('sub-container') //sub main container
+    , pageCounter = document.getElementById('pcount')
+    , keys = { 37: 1, 38: 1, 39: 1, 40: 1 } // Keys disabled
+    , currentPage = 0 // Number of the current page in the dom
+    , pageWidth = window.innerWidth
+    , isScrolling = false
+    , whiteSpace = child.offsetWidth - child.clientWidth;
+
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
 
 //Update the UI when the window is resized.
 window.onresize = function () {
     pageWidth = window.innerWidth;
-    for (let i = 0; i < pages.length; i++)
+    for (var i = 0; i < pages.length; i++)
         if (pages[i].offsetLeft > 0)
             pages[i].style.left = pageWidth + 'px';
 };
 
+if (pageCounter)
+    pageCounter.innerText = 'Página ' + (currentPage + 1) + '/' + pages.length;
+
 function preventDefault(e) {
     e = e || window.event;
-    if (e.preventDefault)
-        e.preventDefault();
-        
-        
-    //Scrolling UP
-    console.log(e.deltaY);
-    
 
-    if (e.deltaY < 0) {
-        movePage(true,e)
-        return;
-    } else if (e.deltaY > 0) {
-        movePage(false,e);
-        return;
+    console.log(pages[currentPage].scrollHeight);
+    console.log(pages[currentPage].scrollTop);
+    console.log((pages[currentPage].scrollHeight - pages[currentPage].scrollTop));
+    console.log(pages[currentPage].offsetHeight);
+    console.log('--------------------------');
+
+
+    if ((pages[currentPage].scrollHeight - pages[currentPage].scrollTop) == pages[currentPage].offsetHeight && e.deltaY > 0) {
+        e.preventDefault();
+        movePage(true);
+    } else if (pages[currentPage].scrollTop == 0 && e.deltaY < 0) {
+        e.preventDefault();
+        movePage(false)
     }
 
     e.returnValue = false;
 }
 
 /**
- * 
+ *
  * @param {*} orientation - Orientation of the animation scroll
  */
-function movePage(orientation,e) {
+function movePage(orientation) {
     if (!isScrolling) {
-        animatePages(pages, orientation, isScrolling);
         isScrolling = true;
-
-        waitForScroll().then(function () {
-            isScrolling = false;
-            propagationPrevent--;
-        });
+        animatePages(pages, orientation, function () { isScrolling = false });
     }
 }
 
 /**
- * Function for wait for the scroll animation.
+ * Prevent default keys action
+ *
+ * @param {*} e
  */
-function waitForScroll() {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve(true);
-        }, pageWidth + 50);
-    });
-}
-
 function preventDefaultForScrollKeys(e) {
     if (keys[e.keyCode]) {
         preventDefault(e);
@@ -79,27 +72,37 @@ function preventDefaultForScrollKeys(e) {
  * @param {*} pages - array of all pages in the doom 
  * @param {*} scrollingUp  - the orientation of the scroll event
  */
-function animatePages(pages, scrollingUp) {
+function animatePages(pages, scrollingUp, cb) {
 
-    var pos = 0;
-    var animationSmooth = 8;
-    var pos2 = pageWidth; //heigth of the pages getted from the dom
-    var id; //ID of the interval
+    var pos = 0,
+        animationSmooth = 8,
+        timeInterval = 1,
+        pos2 = pageWidth, //width of the pages getted from the dom
+        id; //ID of the interval
 
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
-        id = setInterval(move, 2);
+        id = setInterval(move, timeInterval);
     } else if ((currentPage == pages.length - 1) && !scrollingUp) {
-        id = setInterval(move, 2);
+        id = setInterval(move, timeInterval);
     } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
-        id = setInterval(move, 2);
+        id = setInterval(move, timeInterval);
+    } else {
+        cb();
+    }
+
+    function casterText(currentPage) {
+        return 'Página ' + (currentPage + 1) + '/' + pages.length;
     }
 
     function move() {
         if (scrollingUp) {
             if (pos2 <= 0) {
                 clearInterval(id);
+                cb();
                 currentPage += 1;
+                if (pageCounter)
+                    pageCounter.innerText = casterText(currentPage);
             } else {
                 pos2 = (pos2 - animationSmooth <= 0) ? 0 : pos2 -= animationSmooth;
                 pages[currentPage + 1].style.left = pos2 + 'px';
@@ -107,19 +110,20 @@ function animatePages(pages, scrollingUp) {
         } else {
             if (pos >= pageWidth) {
                 clearInterval(id);
+                cb();
                 currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
+                if (pageCounter)
+                    pageCounter.innerText = casterText(currentPage);
             } else {
                 pos += animationSmooth;
                 pages[currentPage].style.left = pos + 'px';
             }
         }
-
     }
-
 }
 
 /**
- * 
+ *
  * @param {*} el - Element of the dom that gonna have the touch detection
  * @param {*} callback - Callback function for code.
  */
@@ -144,12 +148,18 @@ function swipedetect(el, callback) {
         startX = touchobj.pageX;
         startY = touchobj.pageY;
         startTime = new Date().getTime() // record time when finger first makes contact with surface
-        e.preventDefault()
+        //e.preventDefault()
     }, false)
 
     touchsurface.addEventListener('touchmove', function (e) {
-        e.preventDefault() // prevent scrolling when inside DIV
-    }, false)
+        if (e.changedTouches.length == 1) {
+            if (Math.abs(e.changedTouches[0].pageX - startX) > 10) {
+                e.preventDefault();
+            }
+        }
+    });
+
+
 
     touchsurface.addEventListener('touchend', function (e) {
         var touchobj = e.changedTouches[0]
@@ -159,8 +169,7 @@ function swipedetect(el, callback) {
         if (elapsedTime <= allowedTime) { // first condition for awipe met
             if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) { // 2nd condition for horizontal swipe met
                 swipedir = (distX < 0) ? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-            }
-            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) { // 2nd condition for vertical swipe met
+            } else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) { // 2nd condition for vertical swipe met
                 swipedir = (distY < 0) ? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
             }
         }
@@ -187,5 +196,4 @@ if (window.addEventListener)
     window.addEventListener('DOMMouseScroll', preventDefault, false);
 window.onwheel = preventDefault;
 window.onmousewheel = document.onmousewheel = preventDefault;
-window.ontouchmove = preventDefault;
 document.onkeydown = preventDefaultForScrollKeys;
