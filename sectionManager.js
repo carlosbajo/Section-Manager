@@ -12,8 +12,6 @@ var pages = document.getElementsByClassName('page') //All pages from the dom
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
 
-console.log(pages);
-
 //Update the UI when the window is resized.
 window.onresize = function () {
     pageWidth = window.innerWidth;
@@ -28,12 +26,6 @@ if (pageCounter)
 function preventDefault(e) {
     e = e || window.event;
 
-    console.log(pages[currentPage].scrollHeight);
-    console.log(pages[currentPage].scrollTop);
-    console.log((pages[currentPage].scrollHeight - pages[currentPage].scrollTop));
-    console.log(pages[currentPage].offsetHeight);
-    console.log('--------------------------');
-
 
     if ((pages[currentPage].scrollHeight - pages[currentPage].scrollTop) == pages[currentPage].offsetHeight && e.deltaY > 0) {
         e.preventDefault();
@@ -43,7 +35,7 @@ function preventDefault(e) {
         movePage(false)
     }
 
-    e.returnValue = false;
+    //e.returnValue = false;
 }
 
 /**
@@ -77,18 +69,26 @@ function preventDefaultForScrollKeys(e) {
 function animatePages(pages, scrollingUp, cb) {
 
     var pos = 0,
-        animationSmooth = 8,
-        timeInterval = 1,
+        animationSmooth = 20,
         pos2 = pageWidth, //width of the pages getted from the dom
         id; //ID of the interval
 
+    (function () {
+        var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+        window.requestAnimationFrame = requestAnimationFrame;
+    })();
+
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
-        id = setInterval(move, timeInterval);
+        //id = setInterval(move, timeInterval);
+        requestAnimationFrame(move);
     } else if ((currentPage == pages.length - 1) && !scrollingUp) {
-        id = setInterval(move, timeInterval);
+        //id = setInterval(move, timeInterval)
+        requestAnimationFrame(move);
     } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
-        id = setInterval(move, timeInterval);
+        //id = setInterval(move, timeInterval);
+        requestAnimationFrame(move);
     } else {
         cb();
     }
@@ -99,26 +99,27 @@ function animatePages(pages, scrollingUp, cb) {
 
     function move() {
         if (scrollingUp) {
-            if (pos2 <= 0) {
-                clearInterval(id);
+            if (pos2 < 0.5) {
+                //clearInterval(id);
                 cb();
+                pages[currentPage + 1].style.left  = '0px';
                 currentPage += 1;
-                if (pageCounter)
-                    pageCounter.innerText = casterText(currentPage);
             } else {
-                pos2 = (pos2 - animationSmooth <= 0) ? 0 : pos2 -= animationSmooth;
+                pos2 -= (pos2/10);
                 pages[currentPage + 1].style.left = pos2 + 'px';
+                requestAnimationFrame(move);
             }
         } else {
             if (pos >= pageWidth) {
-                clearInterval(id);
+                //clearInterval(id);
                 cb();
-                currentPage = (currentPage == 0) ? 0 : currentPage -= 1;
-                if (pageCounter)
-                    pageCounter.innerText = casterText(currentPage);
+                currentPage -= 1;
+                //if (pageCounter)
+                //    pageCounter.innerText = casterText(currentPage);
             } else {
                 pos += animationSmooth;
                 pages[currentPage].style.left = pos + 'px';
+                requestAnimationFrame(move);
             }
         }
     }
