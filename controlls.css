@@ -1,0 +1,31 @@
+.scb-left {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    left: -60px;
+    border-radius: 50%;
+    top: 40%;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.192);
+    z-index: 2;
+}
+
+.scb-right {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    right: -60px;
+    border-radius: 50%;
+    top: 40%;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.192);
+    z-index: 2;
+}
+
+.scb-left:hover {
+    background-color: rgba(0, 0, 0, 0.582);
+}
+
+.scb-right:hover {
+    background-color: rgba(0, 0, 0, 0.589);
+}
