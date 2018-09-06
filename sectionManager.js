@@ -12,6 +12,8 @@ var pages = document.getElementsByClassName('page') //All pages from the dom
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
 
+console.log(pages);
+
 //Update the UI when the window is resized.
 window.onresize = function () {
     pageWidth = window.innerWidth;
