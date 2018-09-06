@@ -89,8 +89,6 @@ function animatePages(pages, scrollingUp) {
     var animationSmooth = 8;
     var pos2 = pageWidth; //heigth of the pages getted from the dom
     var id; //ID of the interval
-
-    
     
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
@@ -119,9 +117,7 @@ function animatePages(pages, scrollingUp) {
                 pages[currentPage].style.left = pos + 'px';
             }
         }
-
     }
-
 }
 
 /**
