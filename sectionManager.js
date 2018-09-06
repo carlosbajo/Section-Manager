@@ -20,9 +20,6 @@ window.onresize = function () {
             pages[i].style.left = pageWidth + 'px';
 };
 
-if (pageCounter)
-    pageCounter.innerText = 'Página ' + (currentPage + 1) + '/' + pages.length;
-
 function preventDefault(e) {
     e = e || window.event;
 
@@ -68,10 +65,10 @@ function preventDefaultForScrollKeys(e) {
  */
 function animatePages(pages, scrollingUp, cb) {
 
-    var pos = 0,
+    var pos = 1,
         animationSmooth = 20,
         pos2 = pageWidth, //width of the pages getted from the dom
-        id; //ID of the interval
+        posAux = pageWidth;
 
     (function () {
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
@@ -81,43 +78,32 @@ function animatePages(pages, scrollingUp, cb) {
 
     //Determine the type of movement
     if ((currentPage == 0) && scrollingUp) {
-        //id = setInterval(move, timeInterval);
         requestAnimationFrame(move);
     } else if ((currentPage == pages.length - 1) && !scrollingUp) {
-        //id = setInterval(move, timeInterval)
         requestAnimationFrame(move);
     } else if ((currentPage > 0) && (currentPage < (pages.length - 1))) {
-        //id = setInterval(move, timeInterval);
         requestAnimationFrame(move);
     } else {
         cb();
     }
 
-    function casterText(currentPage) {
-        return 'Página ' + (currentPage + 1) + '/' + pages.length;
-    }
-
     function move() {
         if (scrollingUp) {
             if (pos2 < 0.5) {
-                //clearInterval(id);
                 cb();
-                pages[currentPage + 1].style.left  = '0px';
+                pages[currentPage + 1].style.left = '0px';
                 currentPage += 1;
             } else {
-                pos2 -= (pos2/10);
+                pos2 -= (pos2 / 10);
                 pages[currentPage + 1].style.left = pos2 + 'px';
                 requestAnimationFrame(move);
             }
         } else {
             if (pos >= pageWidth) {
-                //clearInterval(id);
                 cb();
                 currentPage -= 1;
-                //if (pageCounter)
-                //    pageCounter.innerText = casterText(currentPage);
             } else {
-                pos += animationSmooth;
+                pos += (Math.sqrt(pos) + 5);
                 pages[currentPage].style.left = pos + 'px';
                 requestAnimationFrame(move);
             }
@@ -150,8 +136,7 @@ function swipedetect(el, callback) {
         swipedir = 'none';
         startX = touchobj.pageX;
         startY = touchobj.pageY;
-        startTime = new Date().getTime() // record time when finger first makes contact with surface
-        //e.preventDefault()
+        startTime = new Date().getTime()
     }, false)
 
     touchsurface.addEventListener('touchmove', function (e) {
