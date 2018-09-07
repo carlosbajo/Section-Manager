@@ -1,4 +1,5 @@
 .zxsh-container {
+    outline: none;
     float: left;
     cursor: pointer;
     margin-top: 20px;
