@@ -22,13 +22,6 @@ window.onresize = function () {
 
 function preventDefault(e) {
     e = e || window.event;
-    /*if ((pages[currentPage].scrollHeight - pages[currentPage].scrollTop) == pages[currentPage].offsetHeight && e.deltaY > 0) {
-        e.preventDefault();
-        movePage(true);
-    } else if (pages[currentPage].scrollTop == 0 && e.deltaY < 0) {
-        e.preventDefault();
-        movePage(false);
-    }*/
 }
 
 /**
