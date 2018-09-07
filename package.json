@@ -1,0 +1,27 @@
+{
+  "name": "scrollpage",
+  "version": "1.0.0",
+  "description": "package json for gulp fike",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosbajo/scrollpage.git"
+  },
+  "author": "Carlos Bajo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlosbajo/scrollpage/issues"
+  },
+  "homepage": "https://github.com/carlosbajo/scrollpage#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "6.0.0",
+    "gulp-concat": "2.6.1",
+    "gulp-minify-css": "1.2.4",
+    "gulp-sass": "4.0.1",
+    "gulp-uglify": "3.0.1"
+  }
+}
