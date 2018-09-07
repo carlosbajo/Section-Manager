@@ -1,8 +1,9 @@
 .zxsh-sidebar {
-    z-index: 1;
+    z-index: 3;
     position: absolute;
     width: 400px;
     height: 100%;
+    margin-left: -400px;
     background-color: rgb(44, 51, 61);
 }
 
@@ -12,7 +13,7 @@
     -ms-transition: 0.5s;
     -o-transition: 0.5s;
     transition: 0.5s;
-    margin-left: 100px !important;
+    margin-left: 0px !important;
 }
 
 .zxsh-sidebar.horizTranslateBack {
@@ -21,5 +22,5 @@
     -ms-transition: 0.5s;
     -o-transition: 0.5s;
     transition: 0.5s;
-    margin-left: 0px !important;
+    margin-left: -400px !important;
 }
