@@ -1,5 +1,5 @@
 'use strict';
-var pages = document.getElementsByClassName('page') //All pages from the dom
+var pages = document.getElementsByClassName('zxsh-page') //All pages from the dom
     , parent = document.getElementById('main-container') //main container used for touch detection
     , child = document.getElementById('sub-container') //sub main container
     , pageCounter = document.getElementById('pcount')

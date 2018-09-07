@@ -35,7 +35,7 @@
     height: 75px;
     margin-left: 40px;
     margin-top: 20px;
-    background-image: url('arrows/left/2x/baseline_keyboard_arrow_left_white_48dp.png');
+    background-image: url('../arrows/left/2x/baseline_keyboard_arrow_left_white_48dp.png');
     background-size: cover;
     opacity: 0.3;
     background-repeat: no-repeat;
@@ -46,7 +46,7 @@
     height: 75px;
     margin-right: 40px;
     margin-top: 20px;
-    background-image: url('arrows/right/2x/baseline_keyboard_arrow_right_white_48dp.png');
+    background-image: url('../arrows/right/2x/baseline_keyboard_arrow_right_white_48dp.png');
     background-size: cover;
     opacity: 0.3;
     background-repeat: no-repeat;
