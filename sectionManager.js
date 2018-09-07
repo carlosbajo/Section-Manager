@@ -22,17 +22,13 @@ window.onresize = function () {
 
 function preventDefault(e) {
     e = e || window.event;
-
-
-    if ((pages[currentPage].scrollHeight - pages[currentPage].scrollTop) == pages[currentPage].offsetHeight && e.deltaY > 0) {
+    /*if ((pages[currentPage].scrollHeight - pages[currentPage].scrollTop) == pages[currentPage].offsetHeight && e.deltaY > 0) {
         e.preventDefault();
         movePage(true);
     } else if (pages[currentPage].scrollTop == 0 && e.deltaY < 0) {
         e.preventDefault();
-        movePage(false)
-    }
-
-    //e.returnValue = false;
+        movePage(false);
+    }*/
 }
 
 /**
@@ -66,9 +62,7 @@ function preventDefaultForScrollKeys(e) {
 function animatePages(pages, scrollingUp, cb) {
 
     var pos = 1,
-        animationSmooth = 20,
-        pos2 = pageWidth, //width of the pages getted from the dom
-        posAux = pageWidth;
+        pos2 = pageWidth; //width of the pages getted from the dom
 
     (function () {
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||

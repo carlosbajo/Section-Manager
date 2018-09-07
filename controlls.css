@@ -6,7 +6,7 @@
     border-radius: 50%;
     top: 40%;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.192);
+    background-color: rgba(0, 0, 0, 0.089);
     z-index: 2;
 }
 
@@ -18,7 +18,7 @@
     border-radius: 50%;
     top: 40%;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.192);
+    background-color: rgba(0, 0, 0, 0.089);
     z-index: 2;
 }
 
@@ -28,4 +28,26 @@
 
 .scb-right:hover {
     background-color: rgba(0, 0, 0, 0.589);
+}
+
+.scb-arrows.left {
+    width: 75px;
+    height: 75px;
+    margin-left: 40px;
+    margin-top: 20px;
+    background-image: url('arrows/left/2x/baseline_keyboard_arrow_left_white_48dp.png');
+    background-size: cover;
+    opacity: 0.3;
+    background-repeat: no-repeat;
+}
+
+.scb-arrows.right {
+    width: 75px;
+    height: 75px;
+    margin-right: 40px;
+    margin-top: 20px;
+    background-image: url('arrows/right/2x/baseline_keyboard_arrow_right_white_48dp.png');
+    background-size: cover;
+    opacity: 0.3;
+    background-repeat: no-repeat;
 }
