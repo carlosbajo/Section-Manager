@@ -1,4 +1,4 @@
-# SectionManager JS (ALPHA)
+# SectionManager (ALPHA)
 
 Section manager is a free open microframework for manage the dom like a magazine or a book it's easy to use and implement.
 
@@ -7,15 +7,26 @@ Section manager is a free open microframework for manage the dom like a magazine
 
 
 
-# Instructions
+# instructions
 
-to use SectionManager in our app you need to import the files SectionManager.min.js and SectionManager.min.css from dist folder into your webapp, then you have to create two principal content divs in the page.
+to use SectionManager in our app you need to import the files SectionManager.min.js and SectionManager.min.css from dist folder into your webapp.
+
+```html
+    <!-- Inside head tag -->
+    <link rel="stylesheet" href="./css/burger.css">
+
+    <!-- Put it on the end of the body tag -->
+    <script src="./js/sectionManager.js" type="text/javascript"></script>
 
 ```
+
+then you have to create two principal content divs in the page.
+
+```html
   <div class="main-container">
     <div class="sub-container">
         
-        Some pages here...
+        Some <articles> here...
     
     </div>
   </div>
@@ -25,11 +36,33 @@ for create the pages of our magazine or book we have to create one div with the 
 
 | Class        | Description           |
 | ------------- |:-------------:| 
-| <strong>zxsh-page</strong>     | defines one page of the book or magazine to show | 
-| <strong>first </strong>      | first page of the magazine      |
-|  <strong>scb-left</strong>   | |
-|  <strong>scb-right</strong>   | |
-|  <strong>scb-arrows</strong>   | |
+| <strong>main-container</strong> | first container for add custom things like different controlls or info | 
+| <strong>sub-container</strong> | contains all the articles to scroll |
+
+# Sample Code
+
+```html
+
+<div class="main-container">
+    <div class="sub-container">
+        
+        <article>
+            one
+        </article>
+    
+        <article>
+            two
+        </article>
+
+        <article>
+            three
+        </article>
+
+    </div>
+</div>
+```
+
+![Alt Text](sample2.gif)
 
 
 # Gulp and new Code
@@ -45,3 +78,7 @@ install all the dependencies from package.json and then use this one.
 ```
 gulp
 ```
+
+# Support table
+
+Coming soon...

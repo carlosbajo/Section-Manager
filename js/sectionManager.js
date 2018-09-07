@@ -1,5 +1,5 @@
 'use strict';
-var pages = document.getElementsByClassName('zxsh-page') //All pages from the dom
+var pages = document.getElementById('sub-container').getElementsByTagName('article') //All pages from the dom
     , parent = document.getElementById('main-container') //main container used for touch detection
     , child = document.getElementById('sub-container') //sub main container
     , pageCounter = document.getElementById('pcount')
@@ -7,6 +7,28 @@ var pages = document.getElementsByClassName('zxsh-page') //All pages from the do
     , pageWidth = window.innerWidth
     , isScrolling = false
     , whiteSpace = child.offsetWidth - child.clientWidth;
+
+
+var leftControll = document.createElement('div'),
+    rigthControll = document.createElement('div'),
+    innerLeft = document.createElement('div'),
+    innerRigth = document.createElement('div');
+
+leftControll.classList.add('scb-left');
+innerLeft.id = 'lb';
+innerLeft.classList.add('scb-arrows');
+innerLeft.classList.add('left');
+leftControll.appendChild(innerLeft);
+
+rigthControll.classList.add('scb-right');
+innerRigth.id = 'rb';
+innerRigth.classList.add('scb-arrows');
+innerRigth.classList.add('right');
+rigthControll.appendChild(innerRigth);
+
+child.appendChild(leftControll);
+child.appendChild(rigthControll);
+
 
 child.style.paddingRight = whiteSpace + 'px';
 child.setAttribute("style", 'width:' + (child.clientWidth + whiteSpace) + 'px;');
