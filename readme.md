@@ -39,7 +39,7 @@ for create the pages of our magazine or book we have to create one div with the 
 | <strong>main-container</strong> | first container for add custom things like different controlls or info | 
 | <strong>sub-container</strong> | contains all the articles to scroll |
 
-# Sample Code
+# Sample Code
 
 ```html
 
