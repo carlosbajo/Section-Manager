@@ -7,18 +7,19 @@ var gulp = require('gulp'),
 
 // Minifies JS
 gulp.task('js', function () {
-    return gulp.src('js/*.js')
+    return gulp.src(['js/sectionManager.js','js/controlls.js','js/burger.js'])
+        .pipe(concat('sectionManager.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('public/js'))
+        .pipe(gulp.dest('dist'))
 });
 
 // Minify and concat CSS files
 gulp.task('styles', function () {
     return gulp.src('css/*.css')
-        .pipe(concat('site.css'))
+        .pipe(concat('sectionManager.min.css'))
         .pipe(minifyCSS())
         .pipe(prefix('last 2 versions'))
-        .pipe(gulp.dest('public/css'))
+        .pipe(gulp.dest('dist'))
 });
 
 gulp.task('default', function () {
