@@ -3,7 +3,6 @@ var pages = document.getElementsByClassName('zxsh-page') //All pages from the do
     , parent = document.getElementById('main-container') //main container used for touch detection
     , child = document.getElementById('sub-container') //sub main container
     , pageCounter = document.getElementById('pcount')
-    , keys = { 37: 1, 38: 1, 39: 1, 40: 1 } // Keys disabled
     , currentPage = 0 // Number of the current page in the dom
     , pageWidth = window.innerWidth
     , isScrolling = false
@@ -41,9 +40,18 @@ function movePage(orientation) {
  * @param {*} e
  */
 function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-        preventDefault(e);
-        return false;
+
+    switch (e.keyCode) {
+
+        case 37: //left
+            movePage(false);
+            break;
+        case 39: //rigth
+            movePage(true);
+            break;
+        case 38: case 40:
+            preventDefault(e);
+            return false;
     }
 }
 
