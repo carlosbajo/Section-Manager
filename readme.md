@@ -9,14 +9,14 @@ Section manager is a free open microframework for manage the dom like a magazine
 
 # instructions
 
-to use SectionManager in our app you need to import the files SectionManager.min.js and SectionManager.min.css from dist folder into your webapp.
+to use SectionManager in our app you need to import the files SectionManager.min.js and SectionManager.min.css from <strong>dist</strong> folder into your webapp.
 
 ```html
     <!-- Inside head tag -->
-    <link rel="stylesheet" href="./css/burger.css">
+    <link rel="stylesheet" href="./sectionManager.min.css">
 
     <!-- Put it on the end of the body tag -->
-    <script src="./js/sectionManager.js" type="text/javascript"></script>
+    <script src="./sectionManager.min.js" type="text/javascript"></script>
 
 ```
 
