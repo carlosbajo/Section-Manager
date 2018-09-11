@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 
 // Minifies JS
 gulp.task('js', function () {
-    return gulp.src(['js/sectionManager.js','js/controlls.js','js/burger.js'])
+    return gulp.src(['js/sectionManager.js','js/controlls.js'])
         .pipe(concat('sectionManager.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'))
