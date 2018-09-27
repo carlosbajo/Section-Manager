@@ -190,7 +190,7 @@ swipedetect(parent, function (swipeOrientation) {
                 movePage(false);
                 confirmSwipe = 0;
                 leftControll.classList.add('scb-l-called');
-                setTimeout(() => {
+                setTimeout(function() {
                     rigthControll.style.visibility = 'hidden';
                     leftControll.style.visibility = 'hidden';
                     leftControll.classList.remove('scb-l-called');
@@ -207,7 +207,7 @@ swipedetect(parent, function (swipeOrientation) {
                 movePage(true);
                 confirmSwipe = 0;
                 rigthControll.classList.add('scb-l-called');
-                setTimeout(() => {
+                setTimeout(function() {
                     rigthControll.style.visibility = 'hidden';
                     leftControll.style.visibility = 'hidden';
                     rigthControll.classList.remove('scb-l-called');
