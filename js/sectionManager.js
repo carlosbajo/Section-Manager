@@ -120,7 +120,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 currentPage -= 1;
             } else {
-                pos += 20;
+                pos += 80;
                 pages[currentPage].style.left = pos + 'px';
                 requestAnimationFrame(move);
             }
@@ -141,7 +141,7 @@ function swipedetect(el, callback) {
         startY,
         distX,
         distY,
-        threshold = 10, //required min distance traveled to be considered swipe
+        threshold = 60, //required min distance traveled to be considered swipe
         restraint = 1000, // maximum distance allowed at the same time in perpendicular direction
         allowedTime = 2000, // maximum time allowed to travel that distance
         elapsedTime,
@@ -182,14 +182,41 @@ function swipedetect(el, callback) {
 }
 
 //Touch detection
+var confirmSwipe = 0;
 swipedetect(parent, function (swipeOrientation) {
     switch (swipeOrientation) {
         case 'right':
-            movePage(false);
+            if (confirmSwipe == 1) {
+                movePage(false);
+                confirmSwipe = 0;
+                leftControll.classList.add('scb-l-called');
+                setTimeout(() => {
+                    rigthControll.style.visibility = 'hidden';
+                    leftControll.style.visibility = 'hidden';
+                    leftControll.classList.remove('scb-l-called');
+                }, 500);
+            } else {
+                rigthControll.style.visibility = 'visible';
+                leftControll.style.visibility = 'visible';
+                confirmSwipe++;
+            }
             break;
 
         case 'left':
-            movePage(true);
+            if (confirmSwipe == 1) {
+                movePage(true);
+                confirmSwipe = 0;
+                rigthControll.classList.add('scb-l-called');
+                setTimeout(() => {
+                    rigthControll.style.visibility = 'hidden';
+                    leftControll.style.visibility = 'hidden';
+                    rigthControll.classList.remove('scb-l-called');
+                }, 500);
+            } else {
+                rigthControll.style.visibility = 'visible';
+                leftControll.style.visibility = 'visible';
+                confirmSwipe++;
+            }
             break;
     }
 });
