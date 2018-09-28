@@ -148,7 +148,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 pages[currentPage].style.display = 'none';
                 currentPage -= 1;
-                window.scbCurrentPage = currentPage + 1;
+                window.scbCurrentPage = currentPage;
             } else {
                 pos += 80;
                 pages[currentPage].style.left = pos + 'px';
