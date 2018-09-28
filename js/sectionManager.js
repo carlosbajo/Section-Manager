@@ -131,10 +131,9 @@ function animatePages(pages, scrollingUp, cb) {
 
     function move() {
         if (scrollingUp) {
-            if (pos2 < 1) {
+            if ((pos2 - 80) < 1) {
                 cb();
                 pages[currentPage + 1].style.left = '0px';
-                pages
                 currentPage += 1;
                 window.scbCurrentPage = currentPage;
             } else {
