@@ -15,7 +15,7 @@ var leftControll = document.createElement('div'),
     innerRigth = document.createElement('div');
 
 window.scbNumPages = pages.length;
-window.scbCurrentPage = 0;
+window.scbCurrentPage = 1;
 
 leftControll.classList.add('scb-left');
 innerLeft.id = 'lb';
@@ -135,7 +135,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 pages[currentPage + 1].style.left = '0px';
                 currentPage += 1;
-                window.scbCurrentPage = currentPage + 1;
+                window.scbCurrentPage = currentPage;
             } else {
                 pages[currentPage + 1].style.display = 'block';
                 pos2 -= 80;
