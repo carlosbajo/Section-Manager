@@ -14,6 +14,9 @@ var leftControll = document.createElement('div'),
     innerLeft = document.createElement('div'),
     innerRigth = document.createElement('div');
 
+window.scbNumPages = pages.length;
+window.scbCurrentPage = 0;
+
 leftControll.classList.add('scb-left');
 innerLeft.id = 'lb';
 innerLeft.classList.add('scb-arrows');
@@ -79,6 +82,27 @@ function preventDefaultForScrollKeys(e) {
 
 /**
  * 
+ * @param {*} num Num of the page that you want to show
+ */
+function setScbPage(num) {
+    currentPage = (num <= 0 && num < pages.length) ? num : currentPage;
+    //requestAnimationFrame(move);
+    window.scbCurrentPage = currentPage;
+    for (var z = 0; z <= pages.length - 1; z++) {
+        if (z <= num) {
+            pages[z].style.left = '0px';
+        } else {
+            pages[z].style.left = pageWidth + 'px';
+        }
+        console.log(pages[z]);
+    }
+}
+
+window.setScbPage = setScbPage;
+
+
+/**
+ * 
  * @param {*} pages - array of all pages in the doom 
  * @param {*} scrollingUp  - the orientation of the scroll event
  */
@@ -104,14 +128,17 @@ function animatePages(pages, scrollingUp, cb) {
         cb();
     }
 
+
     function move() {
         if (scrollingUp) {
             if (pos2 < 1) {
                 cb();
                 pages[currentPage + 1].style.left = '0px';
                 currentPage += 1;
+                window.scbCurrentPage = currentPage;
             } else {
-                pos2 -= (pos2 / 8);
+                pos2 -= 80;
+                //pos2 -= (pos2 / 8); // Revisando esta instrucción.
                 pages[currentPage + 1].style.left = pos2 + 'px';
                 requestAnimationFrame(move);
             }
@@ -119,6 +146,7 @@ function animatePages(pages, scrollingUp, cb) {
             if (pos >= pageWidth) {
                 cb();
                 currentPage -= 1;
+                window.scbCurrentPage = currentPage;
             } else {
                 pos += 80;
                 pages[currentPage].style.left = pos + 'px';
@@ -190,7 +218,7 @@ swipedetect(parent, function (swipeOrientation) {
                 movePage(false);
                 confirmSwipe = 0;
                 leftControll.classList.add('scb-l-called');
-                setTimeout(function() {
+                setTimeout(function () {
                     rigthControll.style.visibility = 'hidden';
                     leftControll.style.visibility = 'hidden';
                     leftControll.classList.remove('scb-l-called');
@@ -207,7 +235,7 @@ swipedetect(parent, function (swipeOrientation) {
                 movePage(true);
                 confirmSwipe = 0;
                 rigthControll.classList.add('scb-l-called');
-                setTimeout(function() {
+                setTimeout(function () {
                     rigthControll.style.visibility = 'hidden';
                     leftControll.style.visibility = 'hidden';
                     rigthControll.classList.remove('scb-l-called');
