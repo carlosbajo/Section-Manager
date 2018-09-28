@@ -1,5 +1,5 @@
 .scb-left {
-    visibility: hidden;
+    visibility: visible;
     position: absolute;
     width: 120px;
     height: 120px;
@@ -12,7 +12,7 @@
 }
 
 .scb-right {
-    visibility: hidden;
+    visibility: visible;
     position: absolute;
     width: 120px;
     height: 120px;
