@@ -134,9 +134,11 @@ function animatePages(pages, scrollingUp, cb) {
             if (pos2 < 1) {
                 cb();
                 pages[currentPage + 1].style.left = '0px';
+                pages
                 currentPage += 1;
                 window.scbCurrentPage = currentPage;
             } else {
+                pages[currentPage + 1].style.display = 'block';
                 pos2 -= 80;
                 //pos2 -= (pos2 / 8); // Revisando esta instrucción.
                 pages[currentPage + 1].style.left = pos2 + 'px';
@@ -145,6 +147,7 @@ function animatePages(pages, scrollingUp, cb) {
         } else {
             if (pos >= pageWidth) {
                 cb();
+                pages[currentPage].style.display = 'none';
                 currentPage -= 1;
                 window.scbCurrentPage = currentPage;
             } else {
