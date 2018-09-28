@@ -52,8 +52,10 @@ function preventDefault(e) {
  *
  * @param {*} orientation - Orientation of the animation scroll
  */
-function movePage(orientation) {
+function movePage(orientation, opt) {
     if (!isScrolling) {
+        if (opt)
+            opt();
         isScrolling = true;
         animatePages(pages, orientation, function () { isScrolling = false });
     }
@@ -135,7 +137,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 pages[currentPage + 1].style.left = '0px';
                 currentPage += 1;
-                window.scbCurrentPage = currentPage;
+                window.scbCurrentPage++;
             } else {
                 pages[currentPage + 1].style.display = 'block';
                 pos2 -= 80;
@@ -148,7 +150,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 pages[currentPage].style.display = 'none';
                 currentPage -= 1;
-                window.scbCurrentPage = currentPage;
+                window.scbCurrentPage--;
             } else {
                 pos += 80;
                 pages[currentPage].style.left = pos + 'px';
