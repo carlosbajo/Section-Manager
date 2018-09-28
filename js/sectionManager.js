@@ -135,7 +135,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 pages[currentPage + 1].style.left = '0px';
                 currentPage += 1;
-                window.scbCurrentPage = currentPage;
+                window.scbCurrentPage = currentPage + 1;
             } else {
                 pages[currentPage + 1].style.display = 'block';
                 pos2 -= 80;
@@ -148,7 +148,7 @@ function animatePages(pages, scrollingUp, cb) {
                 cb();
                 pages[currentPage].style.display = 'none';
                 currentPage -= 1;
-                window.scbCurrentPage = currentPage;
+                window.scbCurrentPage = currentPage + 1;
             } else {
                 pos += 80;
                 pages[currentPage].style.left = pos + 'px';
@@ -163,6 +163,7 @@ function animatePages(pages, scrollingUp, cb) {
  * @param {*} el - Element of the dom that gonna have the touch detection
  * @param {*} callback - Callback function for code.
  */
+/*
 function swipedetect(el, callback) {
 
     var touchsurface = el,
@@ -250,7 +251,7 @@ swipedetect(parent, function (swipeOrientation) {
             break;
     }
 });
-
+*/
 
 if (window.addEventListener)
     window.addEventListener('DOMMouseScroll', preventDefault, false);
