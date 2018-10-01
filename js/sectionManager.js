@@ -106,7 +106,6 @@ function setScbPage(num) {
             pages[z].style.left = pageWidth + 'px';
             pages[z].style.display = 'none';
         }
-        console.log(pages[z]);
     }
 }
 
