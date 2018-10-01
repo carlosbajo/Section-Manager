@@ -93,8 +93,10 @@ function setScbPage(num) {
 
     var currentPCounter = document.getElementById('currentPCounter');
 
-    if (currentPCounter)
-        currentPCounter.innerText = (currentPage + 1) + ' / ' + pages;
+    if (currentPCounter) {
+        currentPCounter.innerText = (currentPage + 1) + ' / ' + pages.length;
+        window.pageCounter = currentPage + 1;
+    }
 
     for (var z = 0; z < pages.length; z++) {
         if (z <= num) {

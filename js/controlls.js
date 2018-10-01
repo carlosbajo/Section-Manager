@@ -3,9 +3,13 @@ var before = document.getElementById('lb'),
 
 
 next.addEventListener("click", function () {
+    if (window.pageCounter)
+        ++window.pageCounter;
     movePage(true);
 });
 
 before.addEventListener("click", function () {
+    if (window.pageCounter)
+        --window.pageCounter;
     movePage(false);
 });
