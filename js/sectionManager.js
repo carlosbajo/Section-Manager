@@ -93,8 +93,10 @@ function setScbPage(num) {
     for (var z = 0; z <= pages.length - 1; z++) {
         if (z <= num) {
             pages[z].style.left = '0px';
+            pages[z].style.display = 'block';
         } else {
             pages[z].style.left = pageWidth + 'px';
+            pages[z].style.display = 'none';
         }
         console.log(pages[z]);
     }
