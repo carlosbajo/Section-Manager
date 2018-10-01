@@ -87,10 +87,10 @@ function preventDefaultForScrollKeys(e) {
  * @param {*} num Num of the page that you want to show
  */
 function setScbPage(num) {
-    currentPage = (num <= 0 && num < pages.length) ? num : currentPage;
+    currentPage = (num >= 0 && num < pages.length) ? num : currentPage;
     //requestAnimationFrame(move);
     window.scbCurrentPage = currentPage;
-    for (var z = 0; z <= pages.length - 1; z++) {
+    for (var z = 0; z < pages.length; z++) {
         if (z <= num) {
             pages[z].style.left = '0px';
             pages[z].style.display = 'block';
