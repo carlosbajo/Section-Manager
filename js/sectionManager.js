@@ -90,6 +90,12 @@ function setScbPage(num) {
     currentPage = (num >= 0 && num < pages.length) ? num : currentPage;
     //requestAnimationFrame(move);
     window.scbCurrentPage = currentPage;
+
+    var currentPCounter = document.getElementById('currentPCounter');
+
+    if (currentPCounter)
+        currentPCounter.innerText = (currentPage + 1) + ' / ' + pages;
+
     for (var z = 0; z < pages.length; z++) {
         if (z <= num) {
             pages[z].style.left = '0px';
