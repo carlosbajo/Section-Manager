@@ -1,10 +1,11 @@
 # SectionManager (ALPHA)
 
-Section manager is a free open microframework for manage the dom like a magazine or a book it's easy to use and implement.
+<img src="logo.png" alt="Reactjs image gallery" height='100' style="float: left; margin-right: 10px;" />
+
+
+Section manager is a free open tool for manage the dom like a magazine or a book it's easy to use and implement.
 
 ![Alt Text](sample.gif)
-
-
 
 
 # instructions
